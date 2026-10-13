@@ -1,0 +1,45 @@
+# Linux Commands — File and Directory Management
+
+>> mkdir new/
+Creates a new directory named `new`.
+
+>> rmdir Desktop/new
+Removes the `new` directory inside `Desktop` if it is empty.
+
+>> echo "Hello" > new.txt
+Options:
+- `echo` = Prints text.
+- `>` = Redirects output to a file, creating it or overwriting its contents.
+
+Creates `new.txt` and writes `Hello` into it.
+
+>> cat new.txt
+Displays the contents of `new.txt` in the terminal.
+
+>> cp new.txt Desktop
+Options:
+- `cp` = Copies files or directories.
+- `new.txt` = Source file.
+- `Desktop` = Destination directory.
+
+Copies `new.txt` into the `Desktop` directory.
+
+>> rm Desktop/new.txt
+Options:
+- `rm` = Removes files.
+- Desktop/new.txt = Path of the file to remove.
+
+Deletes `new.txt` from the `Desktop` directory.
+
+>> updatedb
+Updates the filename database used by `locate`. It may require root privileges.
+
+>> locate new.txt
+Searches the filename database for paths matching `new.txt`.
+
+>> man ls
+Options:
+- `man` = Opens the manual pages.
+- `ls` = Specifies the command to document.
+
+Displays documentation for `ls`, including its options and usage examples.

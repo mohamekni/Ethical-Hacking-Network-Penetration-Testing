@@ -1,0 +1,29 @@
+# Linux Commands — Navigation and Listing
+
+>> pwd
+Displays the absolute path of the current working directory.
+
+>> cd ..
+Moves one level up to the parent directory.
+
+>> cd home/moha
+Navigates to `home/moha` using a relative path.
+
+>> cd Desktop
+Changes the current directory to `Desktop`.
+
+>> cd ..
+Returns to the parent directory.
+
+>> cd /root
+Navigates to the root user's home directory.
+
+>> ls
+Lists files and directories in the current directory.
+
+>> ls -la
+
+Options:
+- -l = Long format: displays detailed information, including permissions, owner, group, size, and modification date.
+- -a = All: displays all entries, including hidden files and directories starting with `.`.
+Helps inspect directory contents, file permissions, ownership, and hidden configuration files.
