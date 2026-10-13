@@ -1,0 +1,125 @@
+03 — File Search Commands in Linux
+
+1. find — Search for files and directories :
+
+>> find /home -name "file.txt"
+>> find / -name "file.txt" 2>/dev/null
+>> find . -name "*.txt"
+>> find . -iname "file.txt"
+>> find /home -type f
+>> find /home -type d
+>> find . -type f -name "*.md"
+
+-  find /home : search inside /home.
+-  -name : search by exact name or pattern.
+-  -iname : case-insensitive search.
+-  -type f : search for files.
+-  -type d : search for directories.
+-  2>/dev/null : hide permission error messages.
+-  . : current directory.
+-  * : wildcard matching multiple characters.
+
+---
+
+2. locate — Quickly find files by name
+
+>> locate file.txt
+>> locate "*.md"
+>> locate -i file.txt
+>> locate -b "\file.txt"
+
+locate file.txt : search the file database.
+-i : ignore uppercase/lowercase differences.
+-b : match the basename.
+\file.txt : match the exact basename.
+
+Update the database
+sudo updatedb
+
+---
+
+3. which — Find a command's executable
+
+>> which python3
+>> which bash
+>> which nmap
+
+---
+
+4. whereis — Find binaries, source files and manual pages
+
+>> whereis ls
+>> whereis python3
+>> whereis nmap
+
+---
+
+5. type — Identify a command
+
+>> type ls
+>> type cd
+>> type python3
+>> type -a python3
+
+type : indicates whether a command is an alias, function, builtin or executable.
+type -a : displays all matching definitions or executable paths.
+
+---
+
+6. grep — Search for text inside files
+
+>> grep "Hello" file.txt
+>> grep -i "hello" file.txt
+>> grep -n "Hello" file.txt
+>> grep -r "password" /home/user/
+>> grep -v "Hello" file.txt
+>> grep -E "error|warning" log.txt
+
+-i : ignore case.
+-n : display line numbers.
+-r : search recursively.
+-v : display lines that do not match.
+-E : use extended regular expressions.
+
+---
+
+7. file — Identify a file's type
+
+>> file file.txt
+>> file image.png
+>> file /bin/ls
+
+---
+
+8. stat — Display file information
+
+>> stat file.txt
+>> stat /etc/passwd
+
+---
+
+9. ls — List files and directories
+
+>> ls
+>> ls -l
+>> ls -la
+>> ls -lh
+>> ls -R
+
+-l : detailed listing.
+-a : include hidden files.
+-h : human-readable sizes.
+-R : list subdirectories recursively.
+
+---
+
+10. fd — Alternative to find (if installed)
+
+>> fd file.txt
+>> fd -e md
+>> fd -t f
+>> fd -t d
+
+-e md : search for Markdown files.
+-t f : files only.
+-t d : directories only.

@@ -1,29 +1,66 @@
-# Linux Commands — Navigation and Listing
+01 — Linux Navigation Commands
+
+1. pwd — Print Working Directory
 
 >> pwd
-Displays the absolute path of the current working directory.
+Display the current working directory.
 
+---
+
+2. cd — Change Directory
+
+>> cd /home/kali
 >> cd ..
-Moves one level up to the parent directory.
+>> cd ../..
+>> cd ~
+>> cd -
+>> cd /
 
->> cd home/moha
-Navigates to `home/moha` using a relative path.
+cd /home/kali : Go to a specific directory
+cd .. : Go to the parent directory
+cd ../.. : Go up two directory levels
+cd ~ : Go to the current user's home directory
+cd - : Return to the previous working directory
+cd / : Go to the filesystem root
 
->> cd Desktop
-Changes the current directory to `Desktop`.
+---
 
->> cd ..
-Returns to the parent directory.
+3. Absolute and Relative Paths
+Absolute path: starts from the root directory /.
+>> cd /home/kali/Documents
 
->> cd /root
-Navigates to the root user's home directory.
+Relative path: starts from the current working directory.
+>> cd Documents
+>> cd ../Downloads
 
->> ls
-Lists files and directories in the current directory.
+---
 
->> ls -la
+4. tree — Display Directory Structure
 
-Options:
-- -l = Long format: displays detailed information, including permissions, owner, group, size, and modification date.
-- -a = All: displays all entries, including hidden files and directories starting with `.`.
-Helps inspect directory contents, file permissions, ownership, and hidden configuration files.
+>> tree
+>> tree -L 2
+>> tree -a
+>> tree -d
+
+-L 2 : limit the display to two directory levels.
+-a : include hidden files.
+-d : display directories only.
+
+Install it if necessary:
+sudo apt update
+sudo apt install tree
+
+---
+
+5. clear — Clear the Terminal
+>> clear
+Keyboard shortcut:
+ctrl + L
+
+
+
+
+
+
+
+

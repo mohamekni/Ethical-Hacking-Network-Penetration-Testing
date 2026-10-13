@@ -1,45 +1,159 @@
-# Linux Commands — File and Directory Management
+02 — Files and Directories Management
 
->> mkdir new/
-Creates a new directory named `new`.
+1. touch — Create Empty Files
+>> touch file.txt
+>> touch file1.txt file2.txt file3.txt
+>> touch notes.md
 
->> rmdir Desktop/new
-Removes the `new` directory inside `Desktop` if it is empty.
+Creates an empty file if it does not exist.
+Updates timestamps if the file already exists.
 
->> echo "Hello" > new.txt
-Options:
-- `echo` = Prints text.
-- `>` = Redirects output to a file, creating it or overwriting its contents.
+---
 
-Creates `new.txt` and writes `Hello` into it.
+2. cat — Display File Contents
 
->> cat new.txt
-Displays the contents of `new.txt` in the terminal.
+>> cat file.txt
+>> cat file1.txt file2.txt
+>> cat -n file.txt
 
->> cp new.txt Desktop
-Options:
-- `cp` = Copies files or directories.
-- `new.txt` = Source file.
-- `Desktop` = Destination directory.
+-n : display line numbers.
+Useful for reading small text files.
 
-Copies `new.txt` into the `Desktop` directory.
+---
 
->> rm Desktop/new.txt
-Options:
-- `rm` = Removes files.
-- Desktop/new.txt = Path of the file to remove.
+3. less — Read Files Page by Page
 
-Deletes `new.txt` from the `Desktop` directory.
+>> less file.txt
+>> less /var/log/syslog
 
->> updatedb
-Updates the filename database used by `locate`. It may require root privileges.
+Space : Next page
+b : Previous page
+/word : Search for a word
+n : Next match
+q : Quit
 
->> locate new.txt
-Searches the filename database for paths matching `new.txt`.
+---
 
->> man ls
-Options:
-- `man` = Opens the manual pages.
-- `ls` = Specifies the command to document.
+4. head and tail — Display Parts of Files
 
-Displays documentation for `ls`, including its options and usage examples.
+>> head file.txt
+>> head -n 20 file.txt
+>> tail file.txt
+>> tail -n 20 file.txt
+>> tail -f /var/log/syslog
+
+head : display the first lines.
+tail : display the last lines.
+-n 20 : display 20 lines.
+tail -f : follow new lines as they are written to a file.
+
+---
+
+5. cp — Copy Files and Directories
+
+>> cp file.txt backup.txt
+>> cp file.txt /tmp/
+>> cp -r Documents Documents_backup
+>> cp -i file.txt backup.txt
+>> cp -v file.txt /tmp/
+
+-r : Copy directories recursively
+-i : Ask before overwriting
+-v : Display copied items
+
+---
+
+6. mv — Move or Rename Files
+
+>> mv file.txt newfile.txt
+>> mv file.txt /tmp/
+>> mv Documents /home/kali/Backup/
+>> mv -i file.txt backup.txt
+
+Rename a file or directory.
+Move files or directories to another location.
+-i : ask before overwriting an existing destination.
+
+---
+
+7. rm — Remove Files and Directories
+
+>> rm file.txt
+>> rm -i file.txt
+>> rm -r old_directory
+>> rm -ri old_directory
+
+-i : Ask before each removal
+-r : Remove directories recursively
+-ri : Remove recursively with confirmation
+
+Warning: rm normally does not move files to the Trash. Deleted files may be difficult or impossible to recover. Be especially careful with rm -r and never run destructive commands without checking the target path.
+
+---
+
+8. mkdir — Create Directories
+
+>> mkdir Documents
+>> mkdir Projects
+>> mkdir -p Projects/Linux/Commands
+>> mkdir dir1 dir2 dir3
+
+-p : create parent directories when needed.
+
+---
+
+9. rmdir — Remove Empty Directories
+rmdir empty_directory
+
+---
+
+10. Redirection — Write and Append to Files
+
+>> echo "Hello Linux" > file.txt
+>> echo "Another line" >> file.txt
+>> cat file.txt
+
+> : Create or overwrite a file
+>> : Append to a file
+< : Use a file as standard input
+2> : Redirect error output
+2>/dev/null : Discard error output
+
+Important: > overwrites existing contents. Use >> when you want to preserve them.
+
+--- 
+
+11. ln — Create Links
+Hard link
+>> ln file.txt hardlink.txt
+
+Symbolic link
+>> ln -s file.txt symlink.txt
+
+A hard link refers to the same underlying file data.
+A symbolic link stores a path pointing to another file or directory.
+
+---
+
+12. du — Estimate Disk Usage
+
+>> du file.txt
+>> du -sh Documents/
+>> du -h --max-depth=1 /home/kali/
+
+-s : show a summary.
+-h : use human-readable units.
+--max-depth=1 : show one directory level below the specified path.
+
+---
+
+15. df — Check Filesystem Space
+
+>> df -h
+>> df -h /home
+
+Displays filesystem capacity, used space and available space.
+Difference: du estimates space used by files and directories; df reports space usage for mounted filesystems.
+
+
+
