@@ -147,7 +147,7 @@ A symbolic link stores a path pointing to another file or directory.
 
 ---
 
-15. df — Check Filesystem Space
+13. df — Check Filesystem Space
 
 >> df -h
 >> df -h /home

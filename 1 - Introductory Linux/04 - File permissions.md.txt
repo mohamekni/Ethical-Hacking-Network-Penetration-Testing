@@ -1,0 +1,176 @@
+04 — Linux File Permissions
+
+Linux permissions control who can read, modify or execute files and directories.
+There are three permission categories:
+
+u : User (owner)
+g : Group
+o : Others
+a : All (user, group and others)
+
+There are three basic permissions:
+
+Permission	Symbol Numeric		Value		Directory
+Read		r			4		List entries
+Write		w			2		Creates, Delete or rename entries
+Execute		x			1		Execute File
+
+---
+
+2. Read Permissions with ls -l
+
+>> ls -l
+>> ls -l file.txt
+>> ls -ld Documents/
+
+-rwxr-xr-- 1 kali developers 1200 Oct 13 10:00 script.sh
+
+- rwx r-x r--
+│ │   │   │
+│ │   │   └── Others: read
+│ │   └────── Group: read and execute
+│ └────────── Owner: read, write and execute
+└──────────── File type
+
+---
+
+3. chmod — Change Permissions
+A. Symbolic mode
+
+>> chmod u+x script.sh
+>> chmod g+w file.txt
+>> chmod o-r file.txt
+>> chmod a+r file.txt
+>> chmod u=rwx,g=rx,o=r script.sh
+
+
+Command			Permissions	Meaning
+
+chmod 777 file		rwxrwxrwx	Everyone has full permissions
+
+chmod 755 script.sh	rwxr-xr-x	Owner has full permissions; others can read and execute
+
+chmod 750 script.sh	rwxr-x---	Owner has full permissions; group can read and execute
+
+chmod 700 private.sh	rwx------	Only the owner has permissions
+
+chmod 644 file.txt	rw-r--r--	Owner can write; everyone can read
+
+chmod 600 secret.txt	rw-------	Owner can read and write
+
+chmod 444 file.txt	r--r--r--	Everyone can read
+
+---
+
+4. chown — Change File Ownership
+
+>> sudo chown user file.txt
+>> sudo chown user:group file.txt
+>> sudo chown -R user:group Documents/
+
+user : new owner.
+group : new group.
+-R : apply recursively to directory contents.
+
+Changes the owner and group to kali.
+
+---
+
+5. chgrp — Change Group Ownership
+
+>> sudo chgrp developers file.txt
+>> sudo chgrp -R developers Projects/
+
+Changes the group associated with a file or directory.
+
+---
+
+6. umask — Set Default Permission Restrictions
+umask determines which permission bits are removed from the default permissions when new files and directories are created.
+
+>> umask
+>> umask -S
+>> umask 022
+
+With a typical umask of 022:
+  New files: 644 (rw-r--r--)
+  New directories: 755 (rwxr-xr-x)
+
+The usual starting permissions are 666 for files and 777 for directories, before applying the mask. Executable permission is not automatically added to newly created regular files.
+
+---
+
+7. Special Permissions
+
+- SUID — Set User ID
+>> chmod u+s program
+>> chmod 4755 program
+On an executable file, SUID can make the program run with the file owner's effective user ID.
+
+- SGID — Set Group ID
+>> chmod g+s directory
+>> chmod 2775 shared_directory
+On a directory, SGID generally makes new entries inherit the directory's group.
+
+- Sticky bit 
+
+>> chmod +t shared_directory
+>> chmod 1777 shared_directory
+
+On a shared directory, the sticky bit restricts deletion or renaming of entries, normally allowing only the entry's owner, directory owner or a privileged user to do so.
+
+Example: /tmp commonly has permissions 1777.
+
+Security note: SUID and SGID executables deserve careful inspection because misconfigurations can create privilege-escalation risks.
+
+---
+
+8. sudo and Root Privileges
+
+>> whoami
+>> id
+>> sudo command
+>> sudo -l
+
+whoami : show the effective username.
+id : display user and group IDs.
+sudo command : run a command with authorized elevated privileges.
+sudo -l : list the commands the current user is permitted to run through sudo.
+
+Do not use root privileges unnecessarily.
+
+---
+
+9. Access Control Lists (ACLs)
+
+getfacl file.txt
+setfacl -m u:alice:r file.txt
+setfacl -m g:developers:rw file.txt
+setfacl -x u:alice file.txt
+
+getfacl : display ACL entries.
+setfacl -m : add or modify an ACL entry.
+setfacl -x : remove an ACL entry.
+
+These commands may require the ACL utilities to be installed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
