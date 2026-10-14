@@ -1,0 +1,210 @@
+05 — Linux Users and Privileges
+
+1. Understanding Linux Users
+
+Linux is a multi-user operating system. Each user has a unique User ID (UID) and may belong to one or more groups.
+There are three important concepts:
+
+User: an account that can access the system.
+Group: a collection of users used to manage permissions.
+Root: the superuser with UID 0, normally having unrestricted administrative privileges.
+
+---
+
+2. Identify the Current User
+
+>> whoami
+>> id
+>> id username
+>> users
+>> who
+>> w
+
+whoami : Display the effective username
+
+id : Display UID, GID and group memberships
+
+id username : Display information about a specific user
+
+users : List usernames currently logged in
+
+who : Show logged-in sessions
+
+w : Show logged-in users and their activity
+
+uid=1000(kali) gid=1000(kali) groups=1000(kali),27(sudo)
+
+uid=1000 : user ID.
+gid=1000 : primary group ID.
+groups : groups the user belongs to.
+
+---
+
+3. Important Linux User Files
+
+- /etc/passwd
+Contains account information, including usernames, UIDs, GIDs, home directories and login shells.
+
+>> cat /etc/passwd
+grep 'moha:' /etc/passwd 
+
+moha:x:1000:1000:moha,,,:/home/moha:/usr/bin/zsh
+
+The x generally indicates that the password hash is stored separately, usually in /etc/shadow.
+
+- /etc/shadow
+Stores password hashes and password-aging information, with access restricted to privileged users or processes.
+
+>> sudo less /etc/shadow
+Security note: Never publish or share the contents of /etc/shadow.
+
+
+- /etc/group
+Contains group names, group IDs and supplementary group membership information.
+
+>> cat /etc/group | grep "sudo"
+sudo:x:27:moha
+
+>> /etc/gshadow
+Stores protected group administration information.
+
+>> sudo less /etc/gshadow
+
+---
+
+4. Create Users — useradd and adduser
+>> sudo useradd username
+
+This creates an account, but by default it may not create a home directory or set a password, depending on system configuration.
+
+Create a user with a home directory
+
+>> sudo useradd -m username
+>> sudo passwd username
+
+-m : create the home directory.
+passwd : set or change the account password.
+
+
+>> sudo adduser username
+adduser guides you through account creation.
+
+---
+
+5. Modify Users — usermod 
+Add a user to a supplementary group
+sudo usermod -aG devgroup username
+
+-a : append supplementary groups without removing existing supplementary memberships.
+-G : specify supplementary groups.
+
+Important: Using -G without -a can replace the user's existing supplementary group list.
+
+Change a user's login shell :
+sudo usermod -s /bin/bash username
+
+Lock or unlock an account
+>> sudo usermod -L username
+>> sudo usermod -U username
+
+-L : lock password authentication.
+-U : unlock password authentication.
+
+---
+
+6. Delete Users — userdel
+
+>> sudo userdel username
+>> sudo userdel -r username
+
+userdel : delete the user account.
+userdel -r : also attempt to remove the user's home directory and mail spool
+
+---
+
+7. Groups — groupadd, groupmod, groupdel
+
+Create a group
+>> sudo groupadd developers
+
+Rename a group
+>> sudo groupmod -n programmers developers
+
+Delete a group
+>> sudo groupdel developers
+
+Add a user to a group
+>> sudo usermod -aG developers username
+
+Inspect group membership
+
+groups
+groups username
+id username
+getent group developers
+
+A new group membership may require logging out and back in to take effect in an existing session.
+
+---
+
+8. Switch Users — su
+
+>> su username
+>> su -
+>> su - username
+
+su username : switch to another user, usually starting a shell with that user's identity.
+su - : start a login shell as root.
+su - username : start a login shell as the specified user.
+
+Return to the previous shell:
+>> exit
+
+---
+
+9. sudo — Run Commands with Elevated Privileges
+
+>> sudo command
+>> sudo -l
+>> sudo -u username command
+>> sudo -i
+
+sudo command : Run a command with authorized elevated privileges
+sudo -l : List commands you are allowed to run through sudo
+sudo -u username command : Run a command as another user, if authorized
+sudo -i : Start an interactive login shell as root, if authorized
+
+---
+
+10. Process Identity — ps
+
+>> ps
+>> ps aux
+>> ps -u username
+>> ps -eo user,pid,comm
+
+ps aux : display a broad list of running processes.
+ps -u username : show processes associated with a user.
+ps -eo user,pid,comm : display process owner, PID and command name.
+
+A process runs with user and group credentials. Inspecting process ownership helps identify services running as root or another account.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
