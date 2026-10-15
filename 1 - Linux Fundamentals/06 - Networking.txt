@@ -1,0 +1,335 @@
+06 — Linux Networking Commands
+
+1. Network Interfaces — ip
+- Display network interfaces
+
+>> ip a
+>> ip addr show
+>> ip link show
+
+ip a : display IP addresses and interfaces.
+ip link show : display network interfaces and their status.
+
+- Display routing table
+>> ip route
+>> ip route show
+>> ip route get 8.8.8.8
+
+ip route : display routing information.
+ip route get 8.8.8.8 : show the route the system would use to reach that destination.
+
+- Display IP addresses only
+>> ip -4 addr
+>> ip -6 addr
+
+-4 : IPv4 addresses.
+-6 : IPv6 addresses.
+
+---
+
+2. Connectivity Testing — ping
+
+>> ping 127.0.0.1
+>> ping 8.8.8.8
+>> ping -c 4 8.8.8.8
+>> ping google.com
+
+127.0.0.1 : IPv4 loopback address.
+-c 4 : send four requests and stop.
+8.8.8.8 : Google's public DNS resolver.
+
+Note: A failed ping does not necessarily mean a host is down. ICMP traffic may be blocked by a firewall.
+
+---
+
+3. DNS Resolution — dig, nslookup, host
+
+>> dig google.com
+>> dig google.com A
+>> dig google.com AAAA
+>> dig google.com MX
+>> dig google.com NS
+>> nslookup google.com
+>> host google.com
+
+dig : Query DNS records in detail
+nslookup : Query DNS information
+host : Perform simple DNS lookups
+
+A : IPv4 address.
+AAAA : IPv6 address.
+MX : mail servers.
+NS : authoritative name servers.
+TXT : text records, often used for verification and email security.
+CNAME : canonical name alias.
+
+---
+
+4. DNS Configuration
+
+>> cat /etc/resolv.conf
+>> resolvectl status
+>> getent hosts google.com
+
+/etc/resolv.conf : DNS resolver configuration, sometimes managed by another service.
+resolvectl status : inspect DNS settings when systemd-resolved is used.
+getent hosts : resolve hostnames using the system's configured name-resolution sources
+
+---
+
+5. Network Connections — ss
+
+Display listening TCP and UDP sockets
+
+ss -tuln
+ss -tulnp
+ss -tan
+ss -uan
+
+-t : TCP sockets
+-u : UDP sockets
+-l : Listening sockets
+-n : Numeric addresses and ports
+-p : Show associated processes when permitted
+-a : Show listening and non-listening sockets
+
+---
+
+6. Network Connections — netstat
+
+>> netstat -tuln
+>> netstat -an
+>> netstat -rn
+
+-tuln : show listening TCP/UDP sockets numerically.
+-an : show network connections and listening sockets.
+-rn : display the routing table numerically.
+
+Note: netstat is a legacy utility provided by the net-tools package. Prefer ss and ip on modern Linux systems.
+
+---
+
+7. Trace Network Routes — traceroute and tracepath
+
+>> traceroute google.com
+>> tracepath google.com
+
+These tools show the network hops toward a destination.
+
+>> sudo apt update
+>> sudo apt install traceroute
+
+Some hops may not respond because routers filter or rate-limit probe traffic.
+
+---
+
+8. Display the Local Hostname — hostname
+
+>> hostname
+>> hostname -I
+>> hostnamectl
+
+hostname : display the system hostname.
+hostname -I : display assigned IP addresses.
+hostnamectl : display or manage hostname settings.
+
+---
+
+9. Download and Test HTTP/HTTPS — curl and wget
+
+curl
+
+>> curl https://example.com
+>> curl -I https://example.com
+>> curl -L https://example.com
+>> curl -o page.html https://example.com
+
+-I : request response headers.
+-L : follow redirects.
+-o : save the response to a file.
+
+wget
+
+>> wget https://example.com
+>> wget -O page.html https://example.com
+
+---
+
+10. Test Ports — nc (Netcat)
+
+>> nc -vz example.com 443
+>> nc -vz 127.0.0.1 22
+>> nc -zv -w 3 example.com 80
+
+-v : verbose output.
+-z : check a port without sending application data.
+-w 3 : set a timeout of three seconds.
+
+Use port checks only against systems you own or are authorized to test.
+
+---
+
+11. Packet Capture — tcpdump
+List available interfaces
+>> sudo tcpdump -D
+
+Capture packets on an interface
+>> sudo tcpdump -i any
+>> sudo tcpdump -i eth0
+
+Save and read packet captures
+>> sudo tcpdump -i any -w capture.pcap
+>> tcpdump -r capture.pcap
+
+-i : select an interface.
+-w : write packets to a capture file.
+-r : read a capture file.
+
+Packet capture may require elevated privileges. Captures can contain sensitive information, so use them only in authorized environments.
+
+---
+
+12. Network Scanning — nmap
+
+>> nmap 192.168.1.10
+>> nmap -sn 192.168.1.0/24
+>> nmap -p 22,80,443 192.168.1.10
+>> nmap -sV 192.168.1.10
+
+Default scan: check common ports.
+-sn : host discovery without a port scan.
+-p : specify ports.
+-sV : attempt service/version detection.
+
+Only scan networks and systems for which you have explicit authorization, such as your own lab or a designated TryHackMe target.
+
+---
+
+13. MAC Addresses and ARP Neighbors
+
+>> ip link show
+>> ip neigh show
+>> arp -n
+
+ip link show : inspect interface properties, including MAC addresses.
+ip neigh show : display the kernel's neighbor table, including IPv4 ARP and IPv6 neighbor-discovery entries.
+arp -n : display IPv4 ARP entries if the legacy utility is installed.
+
+A MAC address is used for communication on the local network link. Routers forward packets between networks using IP addressing.
+
+---
+
+14. Network Configuration and DHCP
+
+>> ip addr show
+>> ip route
+>> cat /etc/resolv.conf
+>> nmcli device status
+>> nmcli connection show
+
+On systems using NetworkManager:
+
+nmcli device status : show network-device status.
+nmcli connection show : list configured connections.
+
+DHCP normally provides a host with configuration such as an IP address, subnet mask or prefix, default gateway and DNS servers.
+
+Avoid renewing or changing network configuration on remote machines unless you understand the possible loss of connectivity.
+
+---
+
+15. Important Network Files
+
+/etc/hosts : Local hostname-to-IP mappings
+
+/etc/resolv.conf : DNS resolver configuration
+
+/etc/hostname : System hostname on many distributions
+
+/etc/hosts.allow : Legacy TCP Wrappers configuration, if supported
+
+/etc/hosts.deny : Legacy TCP Wrappers configuration, if supported
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
