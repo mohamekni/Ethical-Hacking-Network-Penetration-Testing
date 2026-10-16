@@ -1,0 +1,75 @@
+>> service apache2 start
+>> service ssh start
+>> service postgresql start
+
+service apache2 start	Starts the Apache web server (HTTP).
+service ssh start	Starts the SSH server for secure remote connections.
+service postgresql start	Starts the PostgreSQL database server.
+
+# Check service status
+>> sudo service apache2 status
+
+# Stop a service
+>> sudo service apache2 stop
+
+# Restart a service
+>> sudo service apache2 restart
+
+>> systemctl enable ssh
+>> systemctl enable PostgreSQL
+
+systemctl enable ssh	Configures the SSH service to start automatically at boot.
+systemctl enable postgresql	Configures PostgreSQL to start automatically at boot.
+
+---
+
+ping
+
+>> ping -c 1 192.168.112.1 > ip.txt
+
+ping: tests network connectivity.
+-c 1: sends one ICMP packet.
+192.168.112.1: the target IP address.
+>: redirects output to a file.
+ip.txt: the file where the output is saved.
+
+>> cat ip.txt | grep "64 bytes"
+
+64 bytes from 192.168.112.1: icmp_seq=1 ttl=64 time=0.5 ms
+
+>> cat ip.txt | grep "64 bytes" | cut -d " " -f 4
+
+cut: extracts fields from text.
+-d " ": uses a space as the delimiter.
+-f 4: selects the fourth field.
+
+>> cat ip.txt | grep "64 bytes" | cut -d " " -f 4 | tr -d ":"
+
+tr: translates or deletes characters.
+-d ":": deletes the colon character.
+
+---
+
+This Bash command scans multiple IP addresses from iplist.txt using Nmap to check whether port 80 (HTTP) is open, while running scans in parallel.
+
+>> for ip in $(cat iplist.txt); do nmap -p 80 -T4 $ip & done
+
+for ip in ...	Loops through each item and stores it in the variable ip.
+$(cat iplist.txt)	Reads the contents of iplist.txt.
+do	Begins the loop body.
+nmap	Runs a network scan.
+-p 80	Scans only port 80.
+-T4	Uses Nmap's faster timing profile.
+$ip	The current IP address being scanned.
+&	Runs the command in the background.
+done	Ends the loop.
+
+
+
+
+
+
+
+
+
+
