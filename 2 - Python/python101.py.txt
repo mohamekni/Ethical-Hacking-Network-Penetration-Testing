@@ -1,0 +1,22 @@
+#! /bin/python3
+
+#print string
+print("Strings")
+print('Hello,world!')
+print(""" Hello, this
+is multi-line! """)
+print("This is "+"a String")
+print('\n') # New Line
+
+#Math
+print("Math Time:")
+print(50 + 50) # add
+print(50 - 50) # subtract
+print(50 * 50) # multiply
+print(50 / 50) # divide
+print(50 + 50 - 50 * 50 / 50) # PEMDAS
+print(50 ** 2) #exponents
+print(50 % 6) #modulo
+print(50 // 6) # number without leftovers
+
+#Variables & Methods
