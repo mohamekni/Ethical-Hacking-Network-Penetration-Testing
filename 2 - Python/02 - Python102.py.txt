@@ -1,0 +1,32 @@
+#!/bin/python3
+
+
+#Importing
+print("Importing is important")
+
+import sys #system functions and parameters
+from datetime import datetime
+print(datetime.now())
+
+from datetime import datetime as dt #importing with an alias
+print(dt.now())
+
+def new_line():
+	print('\n')
+new_line()
+
+#Advanced Strings
+print("Advanced Strings :")
+my_name = "Moha"
+print(my_name[0]) #first letter
+print(my_name[-1])  #last letter
+
+sentence = "This is a sentence."
+print(sentence[:4]) #first word
+print(sentence[-9:-1]) #last word
+print(sentence[-0])
+print(sentence.split()) #split the sentence by deliminer (space)
+sentence_split = sentence.split()
+sentence_join = ' '.join(sentence_split)
+print(sentence_join)
+print(sentence_split)
