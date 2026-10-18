@@ -1,6 +1,6 @@
-#!/bin/bash
-#Importing
+#!/bin/python3
 
+#Importing
 print("Importing is important")
 
 import sys #system functions and parameters
@@ -96,33 +96,3 @@ person = ["tut","Jeff","Jeef","Bob"]
 combined = zip(movies, person)
 movie_dictionary = {key: value for key, value in combined}
 print(movie_dictionary)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
